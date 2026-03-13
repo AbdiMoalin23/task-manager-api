@@ -21,5 +21,5 @@ class Task(Base):
     description: Mapped[str] = mapped_column(String)
     completed: Mapped[bool] = mapped_column(Boolean, default=False)
     owner_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow())
     owner: Mapped["User"] = relationship(back_populates="tasks")
