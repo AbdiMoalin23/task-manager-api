@@ -2,7 +2,7 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship 
 from typing import List
 from datetime import datetime
 from sqlalchemy import Integer,String, Boolean, DateTime, ForeignKey #defines database column types
-from database import Base
+from app.database import Base
 
 
 class User(Base):
@@ -13,7 +13,7 @@ class User(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     tasks: Mapped[List["Task"]] = relationship(back_populates="owner")
-
+ 
 class Task(Base): 
     __tablename__ = "tasks"
     title: Mapped[str] = mapped_column(String)
