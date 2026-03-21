@@ -3,6 +3,7 @@ from app.database import SessionLocal
 from app import schemas
 from app.models import User
 from app.auth import hash_password, verify_password, create_access_token, get_current_user
+from fastapi.security import OAuth2PasswordRequestForm
 
 router = APIRouter()
 
@@ -28,15 +29,15 @@ def register(user :schemas.UserCreate):
     return new_user
 
 @router.post("/login")
-def login(user: schemas.UserLogin):
+def login(form_data: OAuth2PasswordRequestForm = Depends()):
     db = SessionLocal()
 
-    db_user = db.query(User).filter(User.email == user.email).first()
+    db_user = db.query(User).filter(User.email == form_data.username).first()
 
     if not db_user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
     
-    if not verify_password(user.password, db_user.hashed_password):
+    if not verify_password(form_data.password, db_user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     
     access_token = create_access_token(

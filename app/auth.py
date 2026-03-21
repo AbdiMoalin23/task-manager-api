@@ -2,6 +2,7 @@ from passlib.context import CryptContext
 from jose import jwt, JWTError
 from fastapi.security import OAuth2PasswordBearer
 
+
 from datetime import datetime, timedelta
 from fastapi import Depends, status, HTTPException
 
@@ -12,7 +13,7 @@ from app.database import SessionLocal
 SECRET_KEY = "this-is-my-secret-key"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login") #OAuth2 Dependency object
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/login") #OAuth2 Dependency object
 
 pwd_context = CryptContext(#Hashing Tool
     schemes=["bcrypt"],

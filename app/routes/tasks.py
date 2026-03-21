@@ -51,7 +51,7 @@ def get_task(
     current_user: User = Depends(get_current_user)
 ):
     task = db.query(Task).filter(Task.id == task_id).first()
-
+ 
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
     
